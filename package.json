@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "getmac": "^1.0.7",
-    "sensortag": "^1.1.1"
+    "sensortag": "https://github.com/yagitsawa/node-sensortag.git"
   }
 }
