@@ -5,7 +5,7 @@ This [Node-RED](http://nodered.org/) node can be used connect to any number of T
 
 This node is available as a package on npm. To install run:
 ```
-npm install node-red-contrib-sensortag
+npm install https://github.com/yagitsawa/node-red-contrib-sensortag.git
 ```
 
 This node uses `noble` as the underlying library. To read about its prerequisites you can visit [its GitHub repository](https://github.com/sandeepmistry/noble#prerequisites).
