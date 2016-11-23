@@ -281,6 +281,13 @@ module.exports = function( RED ) {
 			this.tag.on( "simpleKeyChange" , this.onKeyChange.bind( this ) );
 			this.tag.notifySimpleKey( this.errorHandler.bind( this ) );
 		}
+
+		var self = this;
+		this.tag.readBatteryLevel(function(error, batteryLevel) {
+			self.batteryLevel = batteryLevel;
+		});
+		this.tag.on( "batteryLevelChange" , this.onBatteryLevelChange.bind( this ) );
+		this.tag.notifyBatteryLevel( this.errorHandler.bind( this ) );
 	};
 
 	Tag.prototype.onDisconnect = function()
@@ -299,6 +306,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onIrTemperatureChange = function( object , ambient )
 	{
 		this.parent.sendData( this.tag.uuid , "temperature" , 0 , {
+			batteryLevel : this.batteryLevel,
 			object : object,
 			ambient : ambient
 		} );
@@ -307,6 +315,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onAccelerometerChange = function( x , y , z )
 	{
 		this.parent.sendData( this.tag.uuid , "accelerometer" , 1 , {
+			batteryLevel : this.batteryLevel,
 			x : x,
 			y : y,
 			z : z
@@ -316,6 +325,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onHumidityChange = function( temperature , humidity )
 	{
 		this.parent.sendData( this.tag.uuid , "humidity" , 2 , {
+			batteryLevel : this.batteryLevel,
 			temperature : temperature,
 			humidity : humidity
 		} );
@@ -324,6 +334,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onMagnetometerChange = function( x , y , z )
 	{
 		this.parent.sendData( this.tag.uuid , "magnetometer" , 3 , {
+			batteryLevel : this.batteryLevel,
 			x : x,
 			y : y,
 			z : z
@@ -333,6 +344,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onPressureChange = function( pressure )
 	{
 		this.parent.sendData( this.tag.uuid , "pressure" , 4 , {
+			batteryLevel : this.batteryLevel,
 			pressure : pressure
 		} );
 	};
@@ -340,6 +352,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onGyroscopeChange = function( x , y , z )
 	{
 		this.parent.sendData( this.tag.uuid , "gyroscope" , 5 , {
+			batteryLevel : this.batteryLevel,
 			x : x,
 			y : y,
 			z : z
@@ -349,6 +362,7 @@ module.exports = function( RED ) {
 	Tag.prototype.onLuxometerChange = function( lux )
 	{
 		this.parent.sendData( this.tag.uuid , "luxometer" , 6 , {
+			batteryLevel : this.batteryLevel,
 			lux : lux
 		} );
 	};
@@ -356,9 +370,15 @@ module.exports = function( RED ) {
 	Tag.prototype.onKeyChange = function( left , right )
 	{
 		this.parent.sendData( this.tag.uuid , "keys" , 7 , {
+			batteryLevel : this.batteryLevel,
 			key1 : left,
 			key2 : right
 		} );
+	};
+
+	Tag.prototype.onBatteryLevelChange = function( batteryLevel )
+	{
+		this.batteryLevel = batteryLevel;
 	};
 
 	Tag.prototype.errorHandler = function( error )
