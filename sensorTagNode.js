@@ -283,11 +283,7 @@ module.exports = function( RED ) {
 		}
 
 		var self = this;
-		this.tag.readBatteryLevel(function(error, batteryLevel) {
-			self.batteryLevel = batteryLevel;
-		});
-		this.tag.on( "batteryLevelChange" , this.onBatteryLevelChange.bind( this ) );
-		this.tag.notifyBatteryLevel( this.errorHandler.bind( this ) );
+		
 	};
 
 	Tag.prototype.onDisconnect = function()
